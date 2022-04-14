@@ -1,0 +1,51 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AvaloniaApplication7.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AvaloniaApplication7.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Explorer">
+
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"></ColumnDefinition>
+      <ColumnDefinition Width="*"></ColumnDefinition>
+    </Grid.ColumnDefinitions>
+    <DockPanel>
+      <DockPanel DockPanel.Dock="Top" Margin="0 4">
+        <ComboBox Items="{Binding Drives}"
+						  SelectedItem="{Binding SelectedDrive}"
+						  DockPanel.Dock="Left"/>
+        <TextBox Text="{Binding SelectedPath, Mode=OneWay}"
+						 Margin="4 0 0 0"
+						 VerticalContentAlignment="Center"
+						 IsReadOnly="True"
+						 KeyDown="SelectedPath_KeyDown"/>
+      </DockPanel>
+      <TextBlock Classes="realized-count" DockPanel.Dock="Bottom"/>
+      <TreeDataGrid Name="fileViewer" Source="{Binding Source}" >
+        <TreeDataGrid.Styles>
+          <Style Selector="TreeDataGrid TreeDataGridRow:nth-child(2n)">
+            <Setter Property="Background"  Value="#fff8f8f8"/>
+          </Style>
+        </TreeDataGrid.Styles>
+      </TreeDataGrid>
+    </DockPanel>
+    <Grid Grid.Column="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"></ColumnDefinition>
+        <ColumnDefinition Width="*"></ColumnDefinition>
+        <ColumnDefinition Width="*"></ColumnDefinition>
+      </Grid.ColumnDefinitions>
+      <Button Content="Prev" HorizontalContentAlignment="Left" IsVisible="{Binding AreButtonsActive}" Click="PredItem"></Button>
+      <Viewbox Grid.Column="1" Stretch="Uniform" Width="400" Height="600">
+        <Image ToolTip.Tip="{Binding SelectedPath}" Name="ViewingImage" Source="{Binding ViewableImage}">
+        </Image>
+      </Viewbox>
+      <Button Grid.Column="2" Content="Next" HorizontalAlignment="Right" IsVisible="{Binding AreButtonsActive}" Click="NextItem"></Button>
+    </Grid>
+  </Grid>
+
+</Window>
